@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Head from 'next/head'
 import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
@@ -22,6 +23,10 @@ const QuizContainer = styled.div`
 export default function Home() {
   return (
     <QuizBackground>
+      <Head>
+        <title>{(db.title)}</title>
+        <meta property="og:title" content={(db.title)} key="title" />
+      </Head>
       <QuizContainer>
         <Widget>
           <Widget.Header>
