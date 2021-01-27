@@ -18,7 +18,7 @@ const Widget = styled.div`
   p {
     font-size: 14px;
     font-weight: 400;
-    line-height: 1;
+    line-height: 1.4;
     color: ${({ theme }) => theme.colors.textSecond};
   }
 `;
@@ -37,7 +37,6 @@ Widget.Header = styled.header`
 
 Widget.Content = styled.div`
   padding: 24px 32px 32px 32px;
-  line-height: 1.6;
   & > *:first-child {
     margin-top: 0;
   }

@@ -1,10 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
-import Head from 'next/head'
+import { useRouter } from 'next/router';
+
 import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
 import Footer from '../src/components/Footer';
-import InputUserName from '../src/components/Inputs/UserName';
 import InputSubmit from '../src/components/Inputs/Submit';
 import GitHubCorner from '../src/components/GitHubCorner';
 
@@ -20,13 +21,29 @@ const QuizContainer = styled.div`
   }
 `;
 
+const InputStyle = styled.div`
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin-top: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => {
+    return theme.colors.mainBg;
+  }};
+
+      color: ${({ theme }) => theme.colors.textPrimary};
+  }  
+`;
+
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('');
+
   return (
     <QuizBackground>
-      <Head>
-        <title>{(db.title)}</title>
-        <meta property="og:title" content={(db.title)} key="title" />
-      </Head>
       <QuizContainer>
         <Widget>
           <Widget.Header>
@@ -34,8 +51,24 @@ export default function Home() {
           </Widget.Header>
           <Widget.Content>
             <p>{(db.description)}</p>
-            <InputUserName />
-            <InputSubmit />
+            <form autocomplete="off" onSubmit={function (event) {
+              event.preventDefault();
+              router.push(`/quiz?name=${name}`);
+            }}>
+              <InputStyle>
+                <input
+                  id="fname"
+                  onChange={function (event) {
+                    // name = event.target.value;
+                    setName(event.target.value);
+                  }}
+                  type="text"
+                  name="firstname"
+                  placeholder="Coloque seu nome aqui"
+                />
+              </InputStyle>
+              <InputSubmit username={name} />
+            </form>
           </Widget.Content>
         </Widget>
         <Widget>
